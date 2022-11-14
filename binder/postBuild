@@ -1,0 +1,36 @@
+#!/bin/bash
+
+#set -ex
+
+curl -sL https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz -o /tmp/nvim.tar.gz > /dev/null
+mkdir ~/.local
+tar -xf /tmp/nvim.tar.gz -C ~/.local --strip-components=1
+ln -s ~/.local/bin/nvim ~/.local/bin/vi
+echo NeoVim installed
+
+sh -c 'curl -sfLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+mkdir -p ~/.config/nvim
+cp binder/binder_init.vim ~/.config/nvim/init.vim
+
+mkdir -p ~/.config/qualia
+cp binder/binder_config.py ~/.config/qualia/config.py
+
+nvim --headless +PlugInstall +UpdateRemotePlugins +qall  >/dev/null 2>&1
+
+# From jupyter lab workspaces export > binder/workspace.json
+mkdir -p ~/.local/share/binder
+cp binder/workspace.json ~/.local/share/binder/workspace.json
+jupyter lab workspaces import ~/.local/share/binder/workspace.json
+
+echo 'echo "Welcome to Qualia! Enter vi .q.md and type some text to get started!
+
+Example structure:
+
+Current node content
+* Child 1
+* Child 2
+    * Grandchild
+"' >> ~/.bashrc
+
+#nvim ~/a.q.md
