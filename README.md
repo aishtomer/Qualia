@@ -22,7 +22,7 @@
     * After startup click on <kbd>Terminal</kbd> in the middle.
 
 2. Install locally
-    * Add `Plug 'tejasvi/qualia'` to Vim config and then restart.
+    * Add `Plug 'aishtomer/qualia'` to Vim config and then restart.
     * Do `:PlugInstall|UpdateRemotePlugins`.
     * Run with `vi .q.md` or `:e .q.md`.
     * Shortcuts use `<Leader>` which is assumed to be `Space` in the readme.
